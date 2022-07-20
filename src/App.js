@@ -8,13 +8,19 @@ function App() {
 
   const createHandler = (event) => {
     event.preventDefault();
-    const student = {
-      id: Date.now(),
-      name: input,
-      isPresent: undefined,
+    if(input) {
+      const student = {
+        id: Date.now(),
+        name: input,
+        isPresent: undefined,
+      }
+      setStudentList([...studentList, student]);
+      setInput('');
     }
-    setStudentList([...studentList, student]);
-    setInput('');
+    else {
+      alert("you are dumb!");
+    }
+    
   }
 
   const AbsentHandler = (id) => {
