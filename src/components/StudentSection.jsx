@@ -1,4 +1,5 @@
 import React from 'react'
+import '../assets/global.css'
 import AbsentStudentList from './AbsentStudentList'
 import AllStudentList from './AllStudentList'
 import PresentStudentList from './PresentStudentList'
@@ -12,10 +13,16 @@ function StudentSection(props) {
     }
 
     return (
-        <div>
+        <div className="Student-section">
             <AllStudentList
                 studentList={props.studentList}
                 setStudentList={props.setStudentList}
+                editableItem={props.editableItem}
+                setEditableItem={props.setEditableItem}
+                isEditable={props.isEditable}
+                setIsEditable={props.setIsEditable}
+                input={props.input}
+                setInput={props.setInput}
             />
             <PresentStudentList
                 studentList={props.studentList}

@@ -1,0 +1,92 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2em;
+}
+
+.Form {
+  width: 30em;
+  height: 2.5em;
+}
+.Form form {
+  width: 100%;
+  height: 100%;
+}
+.Form form input {
+  width: 70%;
+  height: 100%;
+  padding-left: 0.5em;
+  font-size: 1em;
+}
+.Form form button {
+  width: 30%;
+  height: 100%;
+}
+
+.Student-section {
+  width: 90%;
+  height: 80vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+.All-Student,
+.Present-Student,
+.Absent-Student {
+  width: 32%;
+  border-right: 1px solid #34495e;
+  border-left: 1px solid #34495e;
+  border-top: 1px solid #34495e;
+}
+.All-Student h1,
+.Present-Student h1,
+.Absent-Student h1 {
+  text-align: center;
+  margin-bottom: 1em;
+}
+.All-Student ul,
+.Present-Student ul,
+.Absent-Student ul {
+  list-style-type: none;
+}
+.All-Student ul li,
+.Present-Student ul li,
+.Absent-Student ul li {
+  font-size: 2em;
+  height: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.All-Student ul li p,
+.Present-Student ul li p,
+.Absent-Student ul li p {
+  width: 55%;
+  height: 1.5em;
+}
+.All-Student ul li span,
+.Present-Student ul li span,
+.Absent-Student ul li span {
+  width: 42%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.All-Student ul li button,
+.Present-Student ul li button,
+.Absent-Student ul li button {
+  height: 2em;
+  font-size: 0.5em;
+  padding-left: 0.2em;
+  padding-right: 0.2em;
+}/*# sourceMappingURL=global.css.map */

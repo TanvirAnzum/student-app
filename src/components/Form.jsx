@@ -1,30 +1,42 @@
-import { useState } from 'react';
+import '../assets/global.css';
 
 function Form(props) {
-    const [input, setInput] = useState('');
-
     const createHandler = (event) => {
         event.preventDefault();
-        if (input) {
+        if (props.input) {
             const student = {
                 id: Date.now(),
-                name: input,
+                name: props.input,
                 isPresent: undefined,
             }
             props.setStudentList([...props.studentList, student]);
-            setInput('');
+            props.setInput('');
         }
         else {
             alert("you are dumb!");
         }
+    }
 
+    const updateHandler = (event) => {
+        event.preventDefault();
+        if (props.input) {
+            props.editableItem.name = props.input;
+            props.setIsEditable(false);
+            props.setEditableItem(null);
+            props.setInput("");
+        }
+        else {
+            alert("you are dump!");
+        }
     }
 
     return (
-        <div>
+        <div className='Form'>
             <form action="">
-                <input type="text" value={input} onChange={(event) => setInput(event.target.value)} />
-                <button onClick={(event) => createHandler(event)}>Add Student</button>
+                <input type="text" placeholder='Create New Student' value={props.input} onChange={(event) => props.setInput(event.target.value)} />
+                <button onClick={(event) => props.isEditable ? updateHandler(event) : createHandler(event)}>
+                    {props.isEditable ? "Update Student" : "Add Student"}
+                </button>
             </form>
         </div>
     )
