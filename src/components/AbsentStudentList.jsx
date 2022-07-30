@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import '../assets/global.css';
+import { StudentContext } from '../contexts/StudentProvider';
 
 function AbsentStudentList(props) {
+
+    const { studentList, isLoading, errorMsg } = useContext(StudentContext);
+    
+
     return (
         <div className='Absent-Student'>
             <h1>Absent student</h1>
             <ul>
-                {props.isLoading && <h2 style={{ textAlign: "center" }}>Loading ...... </h2>}
+                {isLoading && <h2 style={{ textAlign: "center" }}>Loading ...... </h2>}
                 {
-                    props.studentList.filter((item) => {
+                    studentList.filter((item) => {
                         if (item.isPresent === false) return true;
                         return false;
                     }).map(student => (
@@ -23,7 +28,7 @@ function AbsentStudentList(props) {
                         </li>
                     ))
                 }
-                {props.errorMsg && <h2 style={{ textAlign: "center" }}>{props.errorMsg}</h2>}
+                {errorMsg && <h2 style={{ textAlign: "center" }}>{errorMsg}</h2>}
             </ul>
         </div>
     )

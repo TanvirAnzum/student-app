@@ -1,7 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import '../assets/global.css';
+import { StudentContext } from '../contexts/StudentProvider';
 
 function AllStudentList(props) {
+
+    const objectValue = useContext(StudentContext);
 
     useEffect(() => {
         props.getData();
@@ -9,19 +12,19 @@ function AllStudentList(props) {
 
 
     const editHandler = (id) => {
-        const tobeEdited = props.studentList.find(item => item.id === id);
-        console.log(props);
-        props.setIsEditable(true);
-        props.setEditableItem(tobeEdited);
-        props.setInput(tobeEdited.name);
+        const tobeEdited = objectValue.studentList.find(item => item.id === id);
+        console.log(objectValue);
+        objectValue.setIsEditable(true);
+        objectValue.setEditableItem(tobeEdited);
+        objectValue.setInput(tobeEdited.name);
     }
 
     const deleteHandler = (id) => {
-        // const tobeDeleted = props.studentList.filter(item => {
+        // const tobeDeleted = objectValue.studentList.filter(item => {
         //     if (item.id === id) return false;
         //     else return true;
         // })
-        // props.setStudentList(tobeDeleted);
+        // objectValue.setStudentList(tobeDeleted);
 
         fetch(`http://localhost:3000/student/${id}`, {
             method: 'DELETE'
@@ -32,7 +35,7 @@ function AllStudentList(props) {
 
 
     const AbsentHandler = (id) => {
-        const selectedStudent = props.studentList.find(index => index.id === id);
+        const selectedStudent = objectValue.studentList.find(index => index.id === id);
         if (selectedStudent.isPresent === undefined) {
             selectedStudent.isPresent = false;
             fetch(`http://localhost:3000/student/${id}`, {
@@ -52,7 +55,7 @@ function AllStudentList(props) {
     }
 
     const PresentHandler = (id) => {
-        const selectedStudent = props.studentList.find(index => index.id === id);
+        const selectedStudent = objectValue.studentList.find(index => index.id === id);
 
 
         if (selectedStudent.isPresent === undefined) {
@@ -76,10 +79,10 @@ function AllStudentList(props) {
         <div className='All-Student'>
             <h1>All student</h1>
             <ul>
-                {props.isLoading && <h2 style={{ textAlign: "center" }}>Loading ...... </h2>}
+                {objectValue.isLoading && <h2 style={{ textAlign: "center" }}>Loading ...... </h2>}
 
                 {
-                    props.studentList.map(item => (
+                    objectValue.studentList.map(item => (
                         <li>
                             <p>
                                 {item.name}
@@ -94,7 +97,7 @@ function AllStudentList(props) {
                     ))
                 }
 
-                {props.errorMsg && <h2 style={{ textAlign: "center" }}>{props.errorMsg}</h2>}
+                {objectValue.errorMsg && <h2 style={{ textAlign: "center" }}>{objectValue.errorMsg}</h2>}
             </ul>
         </div>
     )

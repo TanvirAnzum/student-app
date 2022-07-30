@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import '../assets/global.css'
+import { StudentContext } from '../contexts/StudentProvider'
 import AbsentStudentList from './AbsentStudentList'
 import AllStudentList from './AllStudentList'
 import PresentStudentList from './PresentStudentList'
 
 function StudentSection(props) {
 
+    const { studentList } = useContext(StudentContext);
+
     const toggleHandler = (id) => {
-        const selectedStudent = props.studentList.find(index => index.id === id);
+        const selectedStudent = studentList.find(index => index.id === id);
         selectedStudent.isPresent = !selectedStudent.isPresent;
         fetch(`http://localhost:3000/student/${id}`, {
             method: 'PATCH',
@@ -22,33 +25,9 @@ function StudentSection(props) {
 
     return (
         <div className="Student-section">
-            <AllStudentList
-                studentList={props.studentList}
-                setStudentList={props.setStudentList}
-                editableItem={props.editableItem}
-                setEditableItem={props.setEditableItem}
-                isEditable={props.isEditable}
-                setIsEditable={props.setIsEditable}
-                input={props.input}
-                setInput={props.setInput}
-                getData={props.getData}
-                isLoading={props.isLoading}
-                errorMsg={props.errorMsg}
-            />
-            <PresentStudentList
-                studentList={props.studentList}
-                setStudentList={props.setStudentList}
-                toggleHandler={toggleHandler}
-                isLoading={props.isLoading}
-                errorMsg={props.errorMsg}
-            />
-            <AbsentStudentList
-                studentList={props.studentList}
-                setStudentList={props.setStudentList}
-                toggleHandler={toggleHandler}
-                isLoading={props.isLoading}
-                errorMsg={props.errorMsg}
-            />
+            <AllStudentList getData={props.getData} />
+            <PresentStudentList toggleHandler={toggleHandler} />
+            <AbsentStudentList toggleHandler={toggleHandler} />
         </div>
     )
 }

@@ -1,12 +1,16 @@
+import { useContext } from 'react';
 import '../assets/global.css';
+import { StudentContext } from '../contexts/StudentProvider';
 
 function Form(props) {
+    const objectValue = useContext(StudentContext);
+    
     const createHandler = (event) => {
         event.preventDefault();
-        if (props.input) {
+        if (objectValue.input) {
             const student = {
                 id: Date.now() + '',
-                name: props.input,
+                name: objectValue.input,
                 isPresent: undefined,
             }
 
@@ -20,8 +24,8 @@ function Form(props) {
                 props.getData();
             })
 
-            // props.setStudentList([...props.studentList, student]);
-            props.setInput('');
+            // objectValue.setStudentList([...objectValue.studentList, student]);
+            objectValue.setInput('');
         }
         else {
             alert("you are dumb!");
@@ -30,21 +34,21 @@ function Form(props) {
 
     const updateHandler = (event) => {
         event.preventDefault();
-        if (props.input) {
-            props.editableItem.name = props.input;
-            fetch(`http://localhost:3000/student/${props.editableItem.id}`, {
+        if (objectValue.input) {
+            objectValue.editableItem.name = objectValue.input;
+            fetch(`http://localhost:3000/student/${objectValue.editableItem.id}`, {
                 method: 'PATCH',
-                body: JSON.stringify(props.editableItem),
+                body: JSON.stringify(objectValue.editableItem),
                 headers: {
                     "Content-Type": "application/json"
                 }
             }).then(() => {
-                props.setEditableItem(null);
+                objectValue.setEditableItem(null);
                 props.getData();
             })
 
-            props.setIsEditable(false);
-            props.setInput("");
+            objectValue.setIsEditable(false);
+            objectValue.setInput("");
         }
         else {
             alert("you are dumb!");
@@ -54,9 +58,9 @@ function Form(props) {
     return (
         <div className='Form'>
             <form action="">
-                <input type="text" placeholder='Create New Student' value={props.input} onChange={(event) => props.setInput(event.target.value)} />
-                <button onClick={(event) => props.isEditable ? updateHandler(event) : createHandler(event)}>
-                    {props.isEditable ? "Update Student" : "Add Student"}
+                <input type="text" placeholder='Create New Student' value={objectValue.input} onChange={(event) => objectValue.setInput(event.target.value)} />
+                <button onClick={(event) => objectValue.isEditable ? updateHandler(event) : createHandler(event)}>
+                    {objectValue.isEditable ? "Update Student" : "Add Student"}
                 </button>
             </form>
         </div>
