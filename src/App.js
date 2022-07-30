@@ -9,6 +9,18 @@ function App() {
   const [editableItem, setEditableItem] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
   const [input, setInput] = useState('');
+  const [errorMsg,setErrorMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  const getData = () => {
+    fetch(`http://localhost:3000/student`).then(res => res.json()).then( data => {
+      setStudentList(data);
+      setIsLoading(false);
+    }).catch(err => {
+      setErrorMsg(err.message);
+      setIsLoading(false);
+    })
+  }
 
   return (
     <div className="App">
@@ -21,6 +33,7 @@ function App() {
         setIsEditable={setIsEditable}
         input={input}
         setInput={setInput}
+        getData = {getData}
       />
 
       <StudentSection
@@ -32,6 +45,11 @@ function App() {
         setIsEditable={setIsEditable}
         input={input}
         setInput={setInput}
+        getData = {getData}
+        isLoading = {isLoading}
+        setIsLoading = {setIsLoading}
+        errorMsg = {errorMsg}
+        setErrorMsg = {setErrorMsg}
       />
     </div>
   );

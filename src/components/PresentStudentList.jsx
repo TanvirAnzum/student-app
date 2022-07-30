@@ -7,6 +7,7 @@ function PresentStudentList(props) {
         <div className='Present-Student'>
             <h1>Present student</h1>
             <ul>
+                {props.isLoading && <h2 style={{ textAlign: "center" }}>Loading ...... </h2>}
                 {
                     props.studentList.filter((item) => {
                         if (item.isPresent === true) return true;
@@ -22,6 +23,7 @@ function PresentStudentList(props) {
                         </li>
                     ))
                 }
+                {props.errorMsg && <h2 style={{ textAlign: "center" }}>{props.errorMsg}</h2>}
             </ul>
         </div>
     )

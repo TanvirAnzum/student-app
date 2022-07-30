@@ -6,6 +6,7 @@ function AbsentStudentList(props) {
         <div className='Absent-Student'>
             <h1>Absent student</h1>
             <ul>
+                {props.isLoading && <h2 style={{ textAlign: "center" }}>Loading ...... </h2>}
                 {
                     props.studentList.filter((item) => {
                         if (item.isPresent === false) return true;
@@ -13,15 +14,16 @@ function AbsentStudentList(props) {
                     }).map(student => (
                         <li>
                             <p>
-                            {student.name}
+                                {student.name}
                             </p>
                             <span>
-                            <button onClick={() => { props.toggleHandler(student.id) }}>Accidentally Added</button>
+                                <button onClick={() => { props.toggleHandler(student.id) }}>Accidentally Added</button>
                             </span>
-                            
+
                         </li>
                     ))
                 }
+                {props.errorMsg && <h2 style={{ textAlign: "center" }}>{props.errorMsg}</h2>}
             </ul>
         </div>
     )

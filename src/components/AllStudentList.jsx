@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../assets/global.css';
 
 function AllStudentList(props) {
+
+    useEffect(() => {
+        props.getData();
+    }, [])
+
 
     const editHandler = (id) => {
         const tobeEdited = props.studentList.find(item => item.id === id);
@@ -12,11 +17,17 @@ function AllStudentList(props) {
     }
 
     const deleteHandler = (id) => {
-        const tobeDeleted = props.studentList.filter(item => {
-            if (item.id === id) return false;
-            else return true;
+        // const tobeDeleted = props.studentList.filter(item => {
+        //     if (item.id === id) return false;
+        //     else return true;
+        // })
+        // props.setStudentList(tobeDeleted);
+
+        fetch(`http://localhost:3000/student/${id}`, {
+            method: 'DELETE'
+        }).then(() => {
+            props.getData();
         })
-        props.setStudentList(tobeDeleted);
     }
 
 
@@ -24,7 +35,15 @@ function AllStudentList(props) {
         const selectedStudent = props.studentList.find(index => index.id === id);
         if (selectedStudent.isPresent === undefined) {
             selectedStudent.isPresent = false;
-            props.setStudentList([...props.studentList]);
+            fetch(`http://localhost:3000/student/${id}`, {
+                method: 'PATCH',
+                body: JSON.stringify(selectedStudent),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(() => {
+                props.getData();
+            })
         }
         else {
             alert("Student already in added to the list ")
@@ -38,7 +57,15 @@ function AllStudentList(props) {
 
         if (selectedStudent.isPresent === undefined) {
             selectedStudent.isPresent = true;
-            props.setStudentList([...props.studentList]);
+            fetch(`http://localhost:3000/student/${id}`, {
+                method: 'PATCH',
+                body: JSON.stringify(selectedStudent),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(() => {
+                props.getData();
+            })
         }
         else {
             alert("Student already in added to the list ")
@@ -49,6 +76,8 @@ function AllStudentList(props) {
         <div className='All-Student'>
             <h1>All student</h1>
             <ul>
+                {props.isLoading && <h2 style={{ textAlign: "center" }}>Loading ...... </h2>}
+
                 {
                     props.studentList.map(item => (
                         <li>
@@ -64,6 +93,8 @@ function AllStudentList(props) {
                         </li>
                     ))
                 }
+
+                {props.errorMsg && <h2 style={{ textAlign: "center" }}>{props.errorMsg}</h2>}
             </ul>
         </div>
     )
